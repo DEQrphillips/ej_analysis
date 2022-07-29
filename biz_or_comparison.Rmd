@@ -1,0 +1,454 @@
+---
+title: "biz_or_comparison"
+author: "Ryan Phillips"
+date: "2022-07-21"
+output:
+  word_document: default
+  html_document: default
+---
+
+```{r setup, include=FALSE}
+
+library(tidyverse)
+library(ggplot2)
+library(RColorBrewer)
+library(knitr)
+library(flextable)
+library(scales)
+```
+
+
+
+To: CWSRF staff 
+
+From: Ryan Phillips 
+
+RE: Comparative analysis of Business Oregon vs. proposed low-income and unemployment metrics 
+
+Date: 7/28/22
+
+**Key findings**
+
+•	The low-income and 3.4% unemployment threshold would substantially increase the percentage of cities and proportion of the state population that would be considered economically distressed compared to Business Oregon’s list of distressed cities, including the cities of Bend, Lake Oswego, Portland, Beaverton and Tigard.
+
+•	The low-income and 6.5% unemployment threshold would modestly reduce the number of cities and proportion of the state population that would be considered economically distressed compared to Business Oregon’s list of distressed cities.
+
+
+**Summary**
+
+This paper compares the cities identified as economically distressed according to Business Oregon’s Distressed Areas Indices  to alterative indicators. DEQ CWSRF is considering one indicator of “low-income” and two different indictors for “high unemployment.” The low-income indicator identifies communities in which at least 30.9% of the population earns less than 200% of the poverty level. The first high unemployment indicator identifies communities in which at least 80% of the population 18 years and older is not enrolled in higher education and in which at least 3.4% of the population 16 years and older is unemployed. The second high unemployment indicator identifies communities in which at least 80% of the population 18 years and older is not enrolled in higher education and at least 6.5% of the population 16 years and older is unemployed. 
+
+In the study, a city is classified as “economically distressed” if it meets either the threshold for low-income or a threshold for high unemployment, or both. For instance, if City A meets the threshold for low-income, but not for high unemployment, it is still classified as economically distressed. Similarly, if City B meets the threshold for high unemployment but not low-income, it too is classified as economically distressed. Only cities that do not meet either the threshold for low-income or high-unemployment are considered not economically distressed.
+
+The low-income and unemployment data come for the U.S. Census Bureau’s American Community Survey which maintains data on unemployment and poverty in Oregon.  The data are from the years 2015-2019.
+
+
+**Findings**
+
+Table 1 summarizes the aggregate comparison. According to the Business Oregon criteria, 170 of 233 cities in Oregon are distressed (73.0%), which covers 1,448,260 of 2,872,812 residents in the sample (50.4%). According to the “Low-income or >= 3.4% unemployment” criteria, 196 of 233 cities in Oregon are distressed (84.1%), which covers 2,704,924 of 2,872,812 residents (94.2%). According to the “Low-income or >= 6.5% unemployment” criteria, 158 of 233 cities in Oregon are distressed (67.8%), which covers 1,361,228 of 2,872,812 residents (47.4%). To generate a fair comparison, if a city had missing information, it was removed from the aggregate comparison.
+
+
+
+
+```{r include = FALSE}
+
+#Read in poverty data
+
+us_poverty <- read.csv("places_poverty.csv")
+
+# subset oregon data
+
+or_poverty <- us_poverty %>% 
+  filter(STATE == "Oregon" )
+
+
+# Create a variable called poverty_pop200, with the total population income < 200% poverty level by summing 
+## the variables AMZME002, AMZMME003, AMZME004, AMZME005, AMZME006, AMZME007
+## see codebook for definitions of variables
+
+or_poverty <- or_poverty %>% 
+  mutate(poverty_pop200 = AMZME002 + AMZME003 + AMZME004 + AMZME005 + AMZME006 + AMZME007)
+
+
+# Create a variable "poverty200_dbl" with the population with income  <200% of poverty level divided by 
+## the total population.
+
+or_poverty <- or_poverty %>% 
+  mutate(poverty200_dbl = poverty_pop200/AMZME001)
+
+#create a variable "poverty200_pct" which is equal to "poverty200_dbl" formatted as a percent
+or_poverty <- or_poverty %>% 
+  mutate(poverty200_pct = percent(poverty200_dbl, accuracy = .1))
+
+head(or_poverty$poverty200_pct)
+
+
+# Create a binary variable called "high_poverty" as those cities where  >= 30.9% population that live under 200% of poverty level
+
+or_poverty <- mutate(or_poverty, high_poverty = ifelse(poverty200_dbl >= .309, "Yes", "No"))
+
+
+# Create DF with "PLACE" (place name), "poverty200_pct" and high_poverty variables
+
+places_poverty <- or_poverty %>% 
+  select(PLACE, poverty200_pct, high_poverty, AMZME001)
+
+places_poverty
+
+# rename variable "PLACE" as "city"
+
+places_poverty <- places_poverty %>% 
+  rename(city = PLACE,
+         population = AMZME001)
+
+places_poverty
+
+```
+
+```{r include = FALSE}
+
+# read in educational enrollment and  unemployment data
+
+us_education_employment <- read.csv("education_employment_places.csv")
+
+# subset oregon data
+
+or_education_employment <- us_education_employment %>% 
+  filter(STATE == "Oregon" )
+
+# create a  variable called "college_dbl" equal to the proportion of population 18 and older that are enrolled in undergraduate or graduate school
+
+
+or_education_employment <- or_education_employment %>% 
+  mutate(college_dbl = ((AMROE017 + AMROE018)/(AMPVE001 - AMPKE003 - AMPKE004 - AMPKE005 - AMPKE006 - AMPKE027 - AMPKE028 - AMPKE029 - AMPKE030)))
+
+
+# create a variable called "college_pct", equal to "college_dbl" formatted as percent
+
+or_education_employment <- or_education_employment %>% 
+  mutate(college_pct = percent(college_dbl, accuracy = .1))
+
+
+# Create a binary variable called "high_college" defined as cities where > 20% of population 18 years and older are enrolled in undergraduate or graduate school (i.e., if "yes", <= 80% are enrolled in college)
+
+or_education_employment <- mutate(or_education_employment, high_college = ifelse(college_dbl >.2, "Yes", "No"))
+
+
+# Create a variable "unemployment_dbl" that equals percentage of civilian labor force
+# 16 or older that is unemployed (AMT9E005)/ total civilian labor force (AMT9E003)
+
+
+or_education_employment <- or_education_employment %>% 
+  mutate(unemployment_dbl = AMT9E005/AMT9E003)
+
+# create a variable called "unemployment_pct", equal to "unemployment_dbl" formatted as percent
+
+or_education_employment <- or_education_employment %>% 
+  mutate(unemployment_pct = percent(unemployment_dbl, accuracy = .1))
+
+or_education_employment %>% 
+  select(PLACE, college_pct) %>% 
+  View()
+
+# Create a binary variable called "unemployment_3.4" with >= 3.4% of civilian labor force that is unemployed
+
+or_education_employment <- mutate(or_education_employment, unemployment_3.4 = ifelse(unemployment_dbl >= .034, "Yes", "No"))
+
+
+# Create a binary variable called "unemployment_6.5" with >= 6.5% of civilian labor force that is unemployed
+
+or_education_employment <- mutate(or_education_employment, unemployment_6.5 = ifelse(unemployment_dbl >= .065, "Yes", "No"))
+
+#Create a binary variable called "high_unemployment_3.4 with >= 3.4% of civilian labor force that is unemployed and >= 80% of population 18 years an older are not enrolled in undergraduate or graduate school
+
+or_education_employment <- mutate(or_education_employment, high_unemployment_3.4 = ifelse(unemployment_dbl >= .034 & high_college == "No", "Yes", "No"))
+
+
+#Create a binary variable called "high_unemployment_6.4 with >= 6.5% of civilian labor force that is unemployed and >= 80% of population 18 years an older are not enrolled in undergraduate or graduate school
+
+or_education_employment <- mutate(or_education_employment, high_unemployment_6.5 = ifelse(unemployment_dbl >= .065 & high_college == "No", "Yes", "No"))
+
+or_education_employment <- or_education_employment %>% 
+  rename(city = PLACE)
+
+str(or_education_employment)
+
+```
+
+
+```{r include= FALSE}
+
+# join and wrangle or_education_employment and places_poverty
+
+poverty_employment <- merge(or_education_employment, places_poverty, by="city", all.x = T, all.y = T)
+
+colnames(poverty_employment)
+
+poverty_employment
+
+poverty_employment <-poverty_employment %>% 
+  select(city, high_unemployment_3.4, high_unemployment_6.5, high_poverty, population)
+
+
+
+# drop CDPs, create df poverty_employment_cities
+
+poverty_employment_cities <- poverty_employment[!grepl('CDP', poverty_employment$city),]
+
+poverty_employment_cities
+
+# read in Business Oregon distressed areas data. This data is shared directly to DEQ CWSRF and is # only partially accessible publicly at #https://www.oregon.gov/biz/reports/Pages/DistressedAreas.aspx
+
+
+biz_or <- read.csv("biz_or_distressed_cities.csv")
+
+str(biz_or)
+
+str(poverty_employment_cities)
+
+```
+
+```{r include = FALSE}
+
+# join poverty_employment and biz_or
+
+# need to eliminate space before city name in biz_or and after city name in poverty_employment
+
+biz_or$city <- str_trim(biz_or$city, side = c("both"))
+
+str(biz_or)
+
+write.csv(biz_or, "biz_or.csv", row.names = F)
+
+poverty_employment_cities$city <-str_trim(poverty_employment_cities$city, side = c("right"))
+
+
+
+# remove city from city name
+
+poverty_employment_cities$city<-gsub("city","",as.character(poverty_employment_cities$city))
+
+str(poverty_employment_cities)
+
+poverty_employment_cities$city <-str_trim(poverty_employment_cities$city, side = c("right"))
+
+str(poverty_employment_cities)
+
+write.csv(poverty_employment_cities, "poverty_employment_cities.csv", row.names = F)
+
+
+
+
+# join
+
+comparison <- merge(biz_or, poverty_employment_cities, by = "city", all.x = T, all.y = T)
+
+head(comparison)
+
+summary(comparison)
+
+comparison
+
+
+# rename high_poverty as low_income
+
+comparison <- rename(comparison, low_income = high_poverty)
+
+View(comparison)
+
+```
+
+
+```{r include = FALSE}
+# create flag for cities that meet low_income or high_unemployment_3.4 AND flag for cities that meet low_income or high_unemployment_6.5
+
+comparison <- comparison %>% 
+  mutate(CWSRF_3.4 = ifelse(low_income == "Yes" | high_unemployment_3.4 == "Yes", "Yes", "No"),
+         CWSRF_6.5 = ifelse(low_income == "Yes" | high_unemployment_6.5 == "Yes", "Yes", "No"))
+
+head(comparison)
+
+str(comparison)
+
+
+```
+
+
+```{r include = FALSE}
+# create a flag for Biz Oregon cities that are either distressed cities or are in a distressed county
+
+comparison <- comparison %>% 
+  mutate(distressed_city_or_county = ifelse(city_distressed == "Yes" | county_distressed == "Yes", "Yes", "No"))
+
+head(comparison)
+```
+
+
+
+```{r include = FALSE}
+
+# create aggregate table for comparison
+
+# calculate coverage by city and populations
+# omit NA to get like for like comparison by using same sample of cities
+
+str(comparison)
+
+comparison_no_na <- na.omit(comparison)
+
+summary(comparison_no_na)
+
+# biz OR distressed city or county
+distressed_city_or_county<- comparison_no_na %>% 
+  na.omit() %>% 
+  group_by(distressed_city_or_county) %>% 
+  summarise(n = n(),
+            pop = sum(population))
+
+distressed_city_or_county
+
+#CWSRF_3.4
+CWSRF_3.4 <- comparison_no_na %>% 
+  group_by(CWSRF_3.4) %>% 
+  summarise(n = n(),
+            pop = sum(population))
+
+CWSRF_3.4
+
+# CWSRF_6.5
+
+CWSRF_6.5 <- comparison_no_na %>% 
+  group_by(CWSRF_6.5) %>% 
+  summarise(n = n(),
+            pop = sum(population))
+
+CWSRF_6.5
+
+# create table, using data from df's just created. I calculated the %'s by using R as a calculator. Use data in df's "distressed_city_or_county", "CWSRF_3.4" and "CWSRF_6.5".
+
+
+metric <- c("BIZ OR distressed city", "Low-income or >= 3.4% unemployment", "Low-income or >= 6.5% unemployment")
+
+metric
+
+# count of distressed cities
+distressed_cities <- c(170, 196, 158)
+
+# proprotion of distressed cities for each metric
+perc_distressed_cities<-c(0.7296137, 0.8412017, 0.6781116)
+  
+# proportion of population in distressed cities for each metric
+perc_distressed_population <- c(0.5041263, 0.9415597, 0.4738312)
+
+#create df
+distressed_summary <- data.frame(metric, distressed_cities, perc_distressed_cities, perc_distressed_population)
+
+distressed_summary
+
+# change to percent
+
+distressed_summary <- distressed_summary %>% 
+  mutate(perc_distressed_cities = percent(perc_distressed_cities, accuracy = .1),
+         perc_distressed_population = percent(perc_distressed_population, accuracy = .1))
+
+distressed_summary
+```
+
+```{r echo = FALSE}
+
+# create table comparing which cities would be considered economically distressed according to biz oregon vs. cwsrf metrics
+
+summary_table <- flextable((distressed_summary), 
+                     col_keys = c("metric", "distressed_cities", "perc_distressed_cities", "perc_distressed_population"))
+
+summary_table <- theme_vanilla(summary_table)
+
+summary_table <- add_footer_lines(summary_table, values = c( "Data source: Steven Manson, Jonathan Schroeder, David Van Riper, Tracy Kugler, and Steven Ruggles. IPUMS National Historical Geographic Information System: Version 16.0. Minneapolis, MN: IPUMS. 2021.http://doi.org/10.18128/D050.V16.0", "Business Oregon Distressed Areas"))
+
+summary_table <- set_header_labels(summary_table, 
+                             city = "Metric",
+                             distressed_cities = "Number of distressed cities",
+                             perc_distressed_cities = "Percentage of distressed cities",
+                             perc_distressed_population = "Percentage of population in distressed cities"
+                             )
+
+summary_table <- set_table_properties(summary_table, layout = "autofit", width = .8)
+
+summary_table <- set_caption(summary_table, "Distressed cities and population by metric")
+
+summary_table
+
+```
+
+
+
+
+
+```{r echo = FALSE}
+
+# create table comparing which cities would be considered economically distressed according to biz oregon vs. cwsrf metrics
+
+cities_comparison_table <- flextable((comparison), 
+                     col_keys = c("city", "distressed_city_or_county", "CWSRF_3.4", "CWSRF_6.5", "population"))
+
+cities_comparison_table <- theme_vanilla(cities_comparison_table)
+
+cities_comparison_table <- add_footer_lines(cities_comparison_table, values = c( "Data source: Steven Manson, Jonathan Schroeder, David Van Riper, Tracy Kugler, and Steven Ruggles. IPUMS National Historical Geographic Information System: Version 16.0. Minneapolis, MN: IPUMS. 2021.http://doi.org/10.18128/D050.V16.0", "Business Oregon Distressed Areas"))
+
+cities_comparison_table <- set_header_labels(cities_comparison_table, 
+                             city = "City",
+                             distressed_city_or_county = "Biz OR distressed city",
+                             CWSRF_3.4 = "Low-income or >= 3.4% unemployment",
+                             CWSRF_6.5 = "Low-income or >= 6.5% unemployment",
+                             population = "Population")
+
+cities_comparison_table <- set_table_properties(cities_comparison_table, layout = "autofit", width = .8)
+
+cities_comparison_table <- set_caption(cities_comparison_table, "Biz Oregon vs. low-income and unemployment thresholds for distressed cities")
+
+cities_comparison_table
+
+```
+
+
+# What follows from here is visualizing some of the data. You can stop here.
+
+```{r include = F}
+# exploratory data analysis and visualization
+
+or_education_employment %>% 
+  summarise(mean = mean(unemployment_dbl, na.rm = T),
+            median = median(unemployment_dbl, na.rm = T),
+            IQR = median(unemployment_dbl, na.rm = T))
+         
+
+  or_education_employment %>% 
+  ggplot(aes(x = unemployment_dbl)) +
+  geom_histogram(binwidth = .01) +
+    geom_vline(xintercept = .034, color = "red") +
+    geom_vline(xintercept = .065, color = "green")
+  
+  
+city_unemployment <- or_education_employment %>% 
+  select(city, unemployment_pct)
+
+View(city_unemployment)
+  
+  ggsave("unemployment.png")
+```
+
+```{r include = FALSE}
+
+ or_education_employment %>% 
+  ggplot(aes(x = unemployment_dbl)) +
+  geom_histogram(binwidth = .01) +
+  xlim(0, .2)+
+    geom_vline(xintercept = .034, color = "red") +
+    geom_vline(xintercept = .065, color = "green")
+  
+  ggsave("unemployment_zoom.png")
+
+```
+
+
+

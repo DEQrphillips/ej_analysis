@@ -1,0 +1,346 @@
+--------------------------------------------------------------------------------
+Codebook for NHGIS data file 'nhgis0018_ds249_20205_place'
+--------------------------------------------------------------------------------
+ 
+Contents
+    - Data Summary
+    - Data Dictionary
+    - Citation and Use
+ 
+Additional documentation on NHGIS data sources is available at: 
+    https://www.nhgis.org/documentation/tabular-data 
+ 
+--------------------------------------------------------------------------------
+Data Summary
+--------------------------------------------------------------------------------
+ 
+Year:             2016-2020
+Geographic level: Place (by State)
+Dataset:          2020 American Community Survey: 5-Year Data [2016-2020, Block Groups & Larger Areas]
+   NHGIS code:    2016_2020_ACS5a
+   NHGIS ID:      ds249
+Breakdown(s):     Geographic Subarea:
+                     Total area (00)
+Data type(s):     (E) Estimates
+                  (M) Margins of error
+ 
+Tables:
+ 
+1. Sex by Age
+   Universe:    Total population
+   Source code: B01001
+   NHGIS code:  AMPK
+ 
+2. Total Population
+   Universe:    Total population
+   Source code: B01003
+   NHGIS code:  AMPV
+ 
+3. School Enrollment by Detailed Level of School for the Population 3 Years and Over
+   Universe:    Population 3 years and over
+   Source code: B14007
+   NHGIS code:  AMRO
+ 
+4. Employment Status for the Population 16 Years and Over
+   Universe:    Population 16 years and over
+   Source code: B23025
+   NHGIS code:  AMT9
+ 
+--------------------------------------------------------------------------------
+Data Dictionary
+--------------------------------------------------------------------------------
+ 
+Context Fields 
+        GISJOIN:     GIS Join Match Code
+        YEAR:        Data File Year
+        STUSAB:      State Postal Abbreviation
+        REGIONA:     Region Code
+        DIVISIONA:   Division Code
+        STATE:       State Name
+        STATEA:      State Code
+        COUNTYA:     County Code
+        CTY_SUBA:    County Subdivision Code
+        PLACE:       Place Name
+        PLACEA:      Place Code
+        TRACTA:      Census Tract Code
+        BLCK_GRPA:   Block Group Code
+        C_CITYA:     Consolidated City Code
+        AIANHHA:     American Indian Area/Alaska Native Area/Hawaiian Home Land Code
+        RES_ONLYA:   American Indian Area/Alaska Native Area (Reservation or Statistical Entity Only) Code
+        TRUSTA:      American Indian Area (Off-Reservation Trust Land Only)/Hawaiian Home Land Code
+        AIHHTLI:     American Indian Trust Land/ Hawaiian Home Land Indicator
+        TRBL_SUBA:   Tribal Subdivision Code
+        AITS:        American Indian Tribal Subdivision (FIPS)
+        ANRCA:       Alaska Native Regional Corporation Code
+        CBSAA:       Core Based (Metropolitan/Micropolitan) Statistical Area [2003-Present] Code
+        CSAA:        Combined Statistical Area [2003-Present] Code
+        METDIVA:     Metropolitan Division [2003-Present] Code
+        MEMI:        Metropolitan/Micropolitan Indicator Flag
+        NECTAA:      New England City and Town Area [2003-Present] Code
+        C_NECTAA:    Combined New England City and Town Area [2003-Present] Code
+        NECTADIVA:   New England City and Town Area Division [2003-Present] Code
+        URB_AREAA:   Urban Area [1970-Present] Code
+        CDA:         Congressional District Code
+        STLEG_UPA:   State Legislative District (Upper Chamber) Code
+        STLEG_LOA:   State Legislative District (Lower Chamber) Code
+        ZCTAA:       5-Digit ZIP Code Tabulation Area [2000-Present] Code
+        SUBMCDA:     Subminor Civil Division [Puerto Rico] Code
+        SD_ELMA:     School District (Elementary) Code
+        SD_SECA:     School District (Secondary) Code
+        SD_UNIA:     School District (Unified) Code
+        UR:          Urban/Rural
+        PCI:         Principal City Indicator
+        PUMAA:       Public Use Microdata Sample Area (PUMA) Code
+        GEOID:       Census Geographic Identifier
+        TRBL_CTA:    Tribal Census Tract Code
+        TRBL_BGA:    Tribal Block Group Code
+ 
+Data Type (E):
+    Estimates
+ 
+        NAME_E:      Area Name
+ 
+    Table 1:     Sex by Age
+    Universe:    Total population
+    Source code: B01001
+    NHGIS code:  AMPK
+        AMPKE001:    Total
+        AMPKE002:    Male
+        AMPKE003:    Male: Under 5 years
+        AMPKE004:    Male: 5 to 9 years
+        AMPKE005:    Male: 10 to 14 years
+        AMPKE006:    Male: 15 to 17 years
+        AMPKE007:    Male: 18 and 19 years
+        AMPKE008:    Male: 20 years
+        AMPKE009:    Male: 21 years
+        AMPKE010:    Male: 22 to 24 years
+        AMPKE011:    Male: 25 to 29 years
+        AMPKE012:    Male: 30 to 34 years
+        AMPKE013:    Male: 35 to 39 years
+        AMPKE014:    Male: 40 to 44 years
+        AMPKE015:    Male: 45 to 49 years
+        AMPKE016:    Male: 50 to 54 years
+        AMPKE017:    Male: 55 to 59 years
+        AMPKE018:    Male: 60 and 61 years
+        AMPKE019:    Male: 62 to 64 years
+        AMPKE020:    Male: 65 and 66 years
+        AMPKE021:    Male: 67 to 69 years
+        AMPKE022:    Male: 70 to 74 years
+        AMPKE023:    Male: 75 to 79 years
+        AMPKE024:    Male: 80 to 84 years
+        AMPKE025:    Male: 85 years and over
+        AMPKE026:    Female
+        AMPKE027:    Female: Under 5 years
+        AMPKE028:    Female: 5 to 9 years
+        AMPKE029:    Female: 10 to 14 years
+        AMPKE030:    Female: 15 to 17 years
+        AMPKE031:    Female: 18 and 19 years
+        AMPKE032:    Female: 20 years
+        AMPKE033:    Female: 21 years
+        AMPKE034:    Female: 22 to 24 years
+        AMPKE035:    Female: 25 to 29 years
+        AMPKE036:    Female: 30 to 34 years
+        AMPKE037:    Female: 35 to 39 years
+        AMPKE038:    Female: 40 to 44 years
+        AMPKE039:    Female: 45 to 49 years
+        AMPKE040:    Female: 50 to 54 years
+        AMPKE041:    Female: 55 to 59 years
+        AMPKE042:    Female: 60 and 61 years
+        AMPKE043:    Female: 62 to 64 years
+        AMPKE044:    Female: 65 and 66 years
+        AMPKE045:    Female: 67 to 69 years
+        AMPKE046:    Female: 70 to 74 years
+        AMPKE047:    Female: 75 to 79 years
+        AMPKE048:    Female: 80 to 84 years
+        AMPKE049:    Female: 85 years and over
+ 
+    Table 2:     Total Population
+    Universe:    Total population
+    Source code: B01003
+    NHGIS code:  AMPV
+        AMPVE001:    Total
+ 
+    Table 3:     School Enrollment by Detailed Level of School for the Population 3 Years and Over
+    Universe:    Population 3 years and over
+    Source code: B14007
+    NHGIS code:  AMRO
+        AMROE001:    Total
+        AMROE002:    Enrolled in school
+        AMROE003:    Enrolled in school: Enrolled in nursery school, preschool
+        AMROE004:    Enrolled in school: Enrolled in kindergarten
+        AMROE005:    Enrolled in school: Enrolled in grade 1
+        AMROE006:    Enrolled in school: Enrolled in grade 2
+        AMROE007:    Enrolled in school: Enrolled in grade 3
+        AMROE008:    Enrolled in school: Enrolled in grade 4
+        AMROE009:    Enrolled in school: Enrolled in grade 5
+        AMROE010:    Enrolled in school: Enrolled in grade 6
+        AMROE011:    Enrolled in school: Enrolled in grade 7
+        AMROE012:    Enrolled in school: Enrolled in grade 8
+        AMROE013:    Enrolled in school: Enrolled in grade 9
+        AMROE014:    Enrolled in school: Enrolled in grade 10
+        AMROE015:    Enrolled in school: Enrolled in grade 11
+        AMROE016:    Enrolled in school: Enrolled in grade 12
+        AMROE017:    Enrolled in school: Enrolled in college, undergraduate years
+        AMROE018:    Enrolled in school: Graduate or professional school
+        AMROE019:    Not enrolled in school
+ 
+    Table 4:     Employment Status for the Population 16 Years and Over
+    Universe:    Population 16 years and over
+    Source code: B23025
+    NHGIS code:  AMT9
+        AMT9E001:    Total
+        AMT9E002:    In labor force
+        AMT9E003:    In labor force: Civilian labor force
+        AMT9E004:    In labor force: Civilian labor force: Employed
+        AMT9E005:    In labor force: Civilian labor force: Unemployed
+        AMT9E006:    In labor force: Armed Forces
+        AMT9E007:    Not in labor force
+ 
+Data Type (M):
+    Margins of error
+ 
+        NAME_M:      Area Name
+ 
+    Table 1:     Sex by Age
+    Universe:    Total population
+    Source code: B01001
+    NHGIS code:  AMPK
+        AMPKM001:    Total
+        AMPKM002:    Male
+        AMPKM003:    Male: Under 5 years
+        AMPKM004:    Male: 5 to 9 years
+        AMPKM005:    Male: 10 to 14 years
+        AMPKM006:    Male: 15 to 17 years
+        AMPKM007:    Male: 18 and 19 years
+        AMPKM008:    Male: 20 years
+        AMPKM009:    Male: 21 years
+        AMPKM010:    Male: 22 to 24 years
+        AMPKM011:    Male: 25 to 29 years
+        AMPKM012:    Male: 30 to 34 years
+        AMPKM013:    Male: 35 to 39 years
+        AMPKM014:    Male: 40 to 44 years
+        AMPKM015:    Male: 45 to 49 years
+        AMPKM016:    Male: 50 to 54 years
+        AMPKM017:    Male: 55 to 59 years
+        AMPKM018:    Male: 60 and 61 years
+        AMPKM019:    Male: 62 to 64 years
+        AMPKM020:    Male: 65 and 66 years
+        AMPKM021:    Male: 67 to 69 years
+        AMPKM022:    Male: 70 to 74 years
+        AMPKM023:    Male: 75 to 79 years
+        AMPKM024:    Male: 80 to 84 years
+        AMPKM025:    Male: 85 years and over
+        AMPKM026:    Female
+        AMPKM027:    Female: Under 5 years
+        AMPKM028:    Female: 5 to 9 years
+        AMPKM029:    Female: 10 to 14 years
+        AMPKM030:    Female: 15 to 17 years
+        AMPKM031:    Female: 18 and 19 years
+        AMPKM032:    Female: 20 years
+        AMPKM033:    Female: 21 years
+        AMPKM034:    Female: 22 to 24 years
+        AMPKM035:    Female: 25 to 29 years
+        AMPKM036:    Female: 30 to 34 years
+        AMPKM037:    Female: 35 to 39 years
+        AMPKM038:    Female: 40 to 44 years
+        AMPKM039:    Female: 45 to 49 years
+        AMPKM040:    Female: 50 to 54 years
+        AMPKM041:    Female: 55 to 59 years
+        AMPKM042:    Female: 60 and 61 years
+        AMPKM043:    Female: 62 to 64 years
+        AMPKM044:    Female: 65 and 66 years
+        AMPKM045:    Female: 67 to 69 years
+        AMPKM046:    Female: 70 to 74 years
+        AMPKM047:    Female: 75 to 79 years
+        AMPKM048:    Female: 80 to 84 years
+        AMPKM049:    Female: 85 years and over
+ 
+    Table 2:     Total Population
+    Universe:    Total population
+    Source code: B01003
+    NHGIS code:  AMPV
+        AMPVM001:    Total
+ 
+    Table 3:     School Enrollment by Detailed Level of School for the Population 3 Years and Over
+    Universe:    Population 3 years and over
+    Source code: B14007
+    NHGIS code:  AMRO
+        AMROM001:    Total
+        AMROM002:    Enrolled in school
+        AMROM003:    Enrolled in school: Enrolled in nursery school, preschool
+        AMROM004:    Enrolled in school: Enrolled in kindergarten
+        AMROM005:    Enrolled in school: Enrolled in grade 1
+        AMROM006:    Enrolled in school: Enrolled in grade 2
+        AMROM007:    Enrolled in school: Enrolled in grade 3
+        AMROM008:    Enrolled in school: Enrolled in grade 4
+        AMROM009:    Enrolled in school: Enrolled in grade 5
+        AMROM010:    Enrolled in school: Enrolled in grade 6
+        AMROM011:    Enrolled in school: Enrolled in grade 7
+        AMROM012:    Enrolled in school: Enrolled in grade 8
+        AMROM013:    Enrolled in school: Enrolled in grade 9
+        AMROM014:    Enrolled in school: Enrolled in grade 10
+        AMROM015:    Enrolled in school: Enrolled in grade 11
+        AMROM016:    Enrolled in school: Enrolled in grade 12
+        AMROM017:    Enrolled in school: Enrolled in college, undergraduate years
+        AMROM018:    Enrolled in school: Graduate or professional school
+        AMROM019:    Not enrolled in school
+ 
+    Table 4:     Employment Status for the Population 16 Years and Over
+    Universe:    Population 16 years and over
+    Source code: B23025
+    NHGIS code:  AMT9
+        AMT9M001:    Total
+        AMT9M002:    In labor force
+        AMT9M003:    In labor force: Civilian labor force
+        AMT9M004:    In labor force: Civilian labor force: Employed
+        AMT9M005:    In labor force: Civilian labor force: Unemployed
+        AMT9M006:    In labor force: Armed Forces
+        AMT9M007:    Not in labor force
+ 
+--------------------------------------------------------------------------------
+Citation and Use of NHGIS Data
+--------------------------------------------------------------------------------
+ 
+All persons are granted a limited license to use this documentation and the
+accompanying data, subject to the following conditions:
+
+* REDISTRIBUTION: You will not redistribute the data without permission.
+
+  You may publish a subset of the data to meet journal requirements for accessing 
+  data related to a particular publication. Contact us for permission for any other 
+  redistribution; we will consider requests for free and commercial redistribution.
+
+* CITATION: You will cite NHGIS appropriately.
+
+    * Publications and research reports employing NHGIS data (either tabular or GIS) 
+      should include the following citation:
+
+        Steven Manson, Jonathan Schroeder, David Van Riper, Tracy Kugler, and Steven Ruggles. 
+        IPUMS National Historical Geographic Information System: Version 16.0 
+        [dataset]. Minneapolis, MN: IPUMS. 2021. 
+        http://doi.org/10.18128/D050.V16.0
+
+    * For policy briefs, online resources, or articles in the popular press, we 
+      recommend that you cite the use of NHGIS data as follows:
+
+        IPUMS NHGIS, University of Minnesota, www.nhgis.org.
+
+These terms of use are a legally binding agreement. You can use the data only in 
+accordance with these terms, and any other use is a violation of the agreement. 
+Violations may result in revocation of the agreement and prohibition from using other 
+IPUMS data. If IPUMS or our partners are harmed from your violation, you are 
+responsible for all damages, including reasonable attorney's fees and expenses.
+        
+In addition, we request that users send us a copy of any publications, research
+reports, or educational material making use of the data or documentation.
+
+Send electronic material to: nhgis@umn.edu
+
+Printed matter should be sent to:
+
+    IPUMS NHGIS
+    Institute for Social Research and Data Innovation
+    University of Minnesota
+    50 Willey Hall
+    225 19th Ave S
+    Minneapolis, MN 55455
