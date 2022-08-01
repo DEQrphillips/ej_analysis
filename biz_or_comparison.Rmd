@@ -200,7 +200,7 @@ poverty_employment_cities
 # read in Business Oregon distressed areas data. This data is shared directly to DEQ CWSRF and is # only partially accessible publicly at #https://www.oregon.gov/biz/reports/Pages/DistressedAreas.aspx
 
 
-biz_or <- read.csv("biz_or_distressed_cities.csv")
+biz_or <- read.csv("biz_or.csv")
 
 str(biz_or)
 
